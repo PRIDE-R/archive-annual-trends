@@ -91,7 +91,7 @@ is not complete and will incorrectly influence the outcomes.
 
 ```{r}
 all_projects_up2014.df <- subset(all_projects.df, publication.year!="2015")
-num_projects_up2014 <- nrow(all_projects2014.df)
+num_projects_up2014 <- nrow(all_projects_up2014.df)
 ```
 
 There we are. We have a new dataframe with `r num_projects_up2014` projects 
@@ -113,16 +113,19 @@ can group them by years.
 
 ```{r}
 species_table <- sort(table(all_projects_up2014.df$species), decreasing=T)
-species_table_frequent <- species_table[species_table>2]
+species_table_frequent <- species_table[species_table>10]
 num_species <- length(species_table)
-num_species_frequent <- sum(species_table>2)
+num_species_frequent <- sum(species_table>10)
 ```
 
 We see that we have up to `r num_species` different species. But most of them 
 are rare species that appear just once or twice. Just `r num_species_frequent`
-of them have been submitted more than twice. Let's plot them.    
+of them have been submitted more than ten times. Let's plot them.    
 
 ```{r}
+species_all_time <- data.frame(species=names(species_table_frequent), species_count=species_table_frequent)
+ggplot(data=species_all_time, aes(x=factor(species), y=species_count)) +
+    geom_bar(stat='identity')
 
 ```
 
