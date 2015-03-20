@@ -1,0 +1,177 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>On MS2 Proteomics Research Trends by PRIDE-R</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>On MS2 Proteomics Research Trends</h1>
+        <p>A view from the PRIDE Archive</p>
+
+        <p class="view"><a href="https://github.com/PRIDE-R/archive-anual-trends">View the Project on GitHub <small>PRIDE-R/archive-anual-trends</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/PRIDE-R/archive-anual-trends/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/PRIDE-R/archive-anual-trends/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/PRIDE-R/archive-anual-trends">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>
+<a id="pride-archive-anual-trends---exploratory-data-analysis" class="anchor" href="#pride-archive-anual-trends---exploratory-data-analysis" aria-hidden="true"><span class="octicon octicon-link"></span></a>PRIDE Archive Anual Trends - Exploratory Data Analysis</h1>
+
+<p>Jose A. Dianes<br>
+20 March 2015  </p>
+
+<h2>
+<a id="requisities" class="anchor" href="#requisities" aria-hidden="true"><span class="octicon octicon-link"></span></a>Requisities</h2>
+
+<p>These are some of the libraries and configurations we will use in the 
+following analysis.  </p>
+
+<div class="highlight highlight-r"><pre>require(<span class="pl-vo">devtools</span>)
+install_github(<span class="pl-s1"><span class="pl-pds">"</span>PRIDE-R/prideR<span class="pl-pds">"</span></span>)
+library(<span class="pl-vo">prideR</span>)
+require(<span class="pl-vo">ggplot2</span>)
+theme_set(theme_linedraw())
+require(<span class="pl-vo">dplyr</span>)</pre></div>
+
+<h2>
+<a id="a-draft-of-the-pipeline" class="anchor" href="#a-draft-of-the-pipeline" aria-hidden="true"><span class="octicon octicon-link"></span></a>A draft of the pipeline</h2>
+
+<p>The two first parts are carried out in this document. The data visualisation part
+will be generated and published separatelly and referenced from here.  </p>
+
+<h4>
+<a id="data-acquisition" class="anchor" href="#data-acquisition" aria-hidden="true"><span class="octicon octicon-link"></span></a>Data acquisition</h4>
+
+<p>We will use the <a href="http://pride-r.github.io/prideR">prideR package</a> to retrieve 
+data from all the submitted experiments up to date.  </p>
+
+<h4>
+<a id="exploratory-data-analysis" class="anchor" href="#exploratory-data-analysis" aria-hidden="true"><span class="octicon octicon-link"></span></a>Exploratory Data Analysis</h4>
+
+<p>By using <code>R</code>, first we will prepare and explore data to be mined. Then we will
+compute different summary statistics and generate some plots that will give us
+some insight into the questions we want to answer in our visualisation.  </p>
+
+<h4>
+<a id="data-visualisation" class="anchor" href="#data-visualisation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Data Visualisation</h4>
+
+<p>For this data viz we will use <a href="http://www.tableau.com">Tableau</a>. We will generate some worksheets for the 
+key charts, and then we will put them together in an <em>author-driven</em> linear
+narrative that will go over time answering questions about MS2 proteomics 
+research trends.  </p>
+
+<h2>
+<a id="data-acquisition-1" class="anchor" href="#data-acquisition-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>Data acquisition</h2>
+
+<p>Using <a href="http://pride-r.github.io/prideR">prideR</a>, lets retrieve all the public 
+datasets. We will use a large number as page size so we retrieve all of them.    </p>
+
+<div class="highlight highlight-r"><pre><span class="pl-vo">all_projects</span> <span class="pl-k">&lt;-</span> search.list.ProjectSummary(<span class="pl-s1"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>,<span class="pl-c1">0</span>,<span class="pl-c1">20000</span>)
+<span class="pl-vo">num_projects</span> <span class="pl-k">&lt;-</span> length(project.list(<span class="pl-vo">all_projects</span>))</pre></div>
+
+<p>This time we get 1331 projects in total. Lets convert the result 
+object into a data frame, more suitable to work with the different R libraries.  </p>
+
+<div class="highlight highlight-r"><pre><span class="pl-vo">all_projects.df</span> <span class="pl-k">&lt;-</span> as.data.frame(<span class="pl-vo">all_projects</span>)
+names(<span class="pl-vo">all_projects.df</span>)</pre></div>
+
+<pre><code>##  [1] "accession"           "project.title"       "project.description"
+##  [4] "publication.date"    "num.assays"          "species"            
+##  [7] "tissues"             "ptm.names"           "instrument.names"   
+## [10] "project.tags"        "submissionType"
+</code></pre>
+
+<p>Let's have a look at the publication dates.  </p>
+
+<div class="highlight highlight-r"><pre>str(<span class="pl-vo">all_projects.df</span><span class="pl-k">$</span><span class="pl-vo">publication.date</span>)</pre></div>
+
+<pre><code>##  POSIXct[1:1331], format: "2015-03-19" "2015-03-19" "2015-03-19" "2015-03-19" ...
+</code></pre>
+
+<p>We see they are already in date format (<code>POSIXct</code>) and contain month and day. But we are just
+interested in years in our study of trends, so let's extract the year in a separate
+variable in the data frame.  </p>
+
+<div class="highlight highlight-r"><pre><span class="pl-vo">all_projects.df</span><span class="pl-k">$</span><span class="pl-vo">publication.year</span> <span class="pl-k">&lt;-</span> as.factor(format(<span class="pl-vo">all_projects.df</span><span class="pl-k">$</span><span class="pl-vo">publication.date</span>, <span class="pl-s1"><span class="pl-pds">"</span>%Y<span class="pl-pds">"</span></span>))
+table(<span class="pl-vo">all_projects.df</span><span class="pl-k">$</span><span class="pl-vo">publication.year</span>)</pre></div>
+
+<pre><code>## 
+## 2005 2006 2007 2008 2009 2010 2011 2012 2013 2014 2015 
+##    6   12   18   22   52   75  112  181  255  485  113
+</code></pre>
+
+<p>We have a lot of information in that summary table. But let's put it visually.  </p>
+
+<div class="highlight highlight-r"><pre>ggplot(<span class="pl-v">data</span><span class="pl-k">=</span><span class="pl-vo">all_projects.df</span>, aes(<span class="pl-v">x</span><span class="pl-k">=</span><span class="pl-vo">publication.year</span>)) <span class="pl-k">+</span>
+    geom_bar()</pre></div>
+
+<p><img src="README_files/figure-html/unnamed-chunk-6-1.png" alt=""> </p>
+
+<p>Maybe we should exclude the present year from our trend analysis since the year
+is not complete and will incorrectly influence the outcomes.  </p>
+
+<div class="highlight highlight-r"><pre><span class="pl-vo">all_projects_up2014.df</span> <span class="pl-k">&lt;-</span> subset(<span class="pl-vo">all_projects.df</span>, <span class="pl-vo">publication.year</span><span class="pl-k">!=</span><span class="pl-s1"><span class="pl-pds">"</span>2015<span class="pl-pds">"</span></span>)
+<span class="pl-vo">num_projects_up2014</span> <span class="pl-k">&lt;-</span> nrow(<span class="pl-vo">all_projects_up2014.df</span>)</pre></div>
+
+<p>There we are. We have a new dataframe with 1218 projects 
+up to 2014. I think we are ready to start doing some Exploratory Analysis.  </p>
+
+<h2>
+<a id="exploratory-data-analysis-1" class="anchor" href="#exploratory-data-analysis-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>Exploratory Data Analysis</h2>
+
+<p>So we know how the number of publications has changed over the years. But we are
+also interested in what people research during these years. From the names in our
+data frame we saw that each project includes information regarding:  </p>
+
+<ul>
+<li>Species<br>
+</li>
+<li>Tissues<br>
+</li>
+<li>Modification names<br>
+</li>
+<li>Instrument names<br>
+</li>
+</ul>
+
+<p>Let's first have a look at each of these variables as a whole, and later on we
+can group them by years.  </p>
+
+<div class="highlight highlight-r"><pre><span class="pl-vo">species_table</span> <span class="pl-k">&lt;-</span> sort(table(<span class="pl-vo">all_projects_up2014.df</span><span class="pl-k">$</span><span class="pl-vo">species</span>), <span class="pl-v">decreasing</span><span class="pl-k">=</span><span class="pl-c1">T</span>)
+<span class="pl-vo">species_table_frequent</span> <span class="pl-k">&lt;-</span> <span class="pl-vo">species_table</span>[<span class="pl-vo">species_table</span><span class="pl-k">&gt;</span><span class="pl-c1">10</span>]
+<span class="pl-vo">num_species</span> <span class="pl-k">&lt;-</span> length(<span class="pl-vo">species_table</span>)
+<span class="pl-vo">num_species_frequent</span> <span class="pl-k">&lt;-</span> sum(<span class="pl-vo">species_table</span><span class="pl-k">&gt;</span><span class="pl-c1">10</span>)</pre></div>
+
+<p>We see that we have up to 312 different species. But most of them 
+are rare species that appear just once or twice. Just 10
+of them have been submitted more than ten times. Let's plot them.    </p>
+
+<div class="highlight highlight-r"><pre><span class="pl-vo">species_all_time</span> <span class="pl-k">&lt;-</span> <span class="pl-st">data.frame</span>(<span class="pl-v">species</span><span class="pl-k">=</span>names(<span class="pl-vo">species_table_frequent</span>), <span class="pl-v">species_count</span><span class="pl-k">=</span><span class="pl-vo">species_table_frequent</span>)
+ggplot(<span class="pl-v">data</span><span class="pl-k">=</span><span class="pl-vo">species_all_time</span>, aes(<span class="pl-v">x</span><span class="pl-k">=</span><span class="pl-st">factor</span>(<span class="pl-vo">species</span>), <span class="pl-v">y</span><span class="pl-k">=</span><span class="pl-vo">species_count</span>)) <span class="pl-k">+</span>
+    geom_bar(<span class="pl-v">stat</span><span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">'</span>identity<span class="pl-pds">'</span></span>)</pre></div>
+
+<p><img src="README_files/figure-html/unnamed-chunk-9-1.png" alt=""> </p>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/PRIDE-R">PRIDE-R</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
