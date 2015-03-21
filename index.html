@@ -40,12 +40,12 @@
 <p>These are some of the libraries and configurations we will use in the 
 following analysis.  </p>
 
-<div class="highlight highlight-r"><pre>require(<span class="pl-vo">devtools</span>)
-install_github(<span class="pl-s1"><span class="pl-pds">"</span>PRIDE-R/prideR<span class="pl-pds">"</span></span>)
-library(<span class="pl-vo">prideR</span>)
-require(<span class="pl-vo">ggplot2</span>)
+<div class="highlight highlight-r"><pre>require(<span class="pl-smi">devtools</span>)
+install_github(<span class="pl-s"><span class="pl-pds">"</span>PRIDE-R/prideR<span class="pl-pds">"</span></span>)
+library(<span class="pl-smi">prideR</span>)
+require(<span class="pl-smi">ggplot2</span>)
 theme_set(theme_linedraw())
-require(<span class="pl-vo">dplyr</span>)</pre></div>
+require(<span class="pl-smi">dplyr</span>)</pre></div>
 
 <h2>
 <a id="a-draft-of-the-pipeline" class="anchor" href="#a-draft-of-the-pipeline" aria-hidden="true"><span class="octicon octicon-link"></span></a>A draft of the pipeline</h2>
@@ -80,14 +80,14 @@ research trends.  </p>
 <p>Using <a href="http://pride-r.github.io/prideR">prideR</a>, lets retrieve all the public 
 datasets. We will use a large number as page size so we retrieve all of them.    </p>
 
-<div class="highlight highlight-r"><pre><span class="pl-vo">all_projects</span> <span class="pl-k">&lt;-</span> search.list.ProjectSummary(<span class="pl-s1"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>,<span class="pl-c1">0</span>,<span class="pl-c1">20000</span>)
-<span class="pl-vo">num_projects</span> <span class="pl-k">&lt;-</span> length(project.list(<span class="pl-vo">all_projects</span>))</pre></div>
+<div class="highlight highlight-r"><pre><span class="pl-smi">all_projects</span> <span class="pl-k">&lt;-</span> search.list.ProjectSummary(<span class="pl-s"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>,<span class="pl-c1">0</span>,<span class="pl-c1">20000</span>)
+<span class="pl-smi">num_projects</span> <span class="pl-k">&lt;-</span> length(project.list(<span class="pl-smi">all_projects</span>))</pre></div>
 
 <p>This time we get 1331 projects in total. Lets convert the result 
 object into a data frame, more suitable to work with the different R libraries.  </p>
 
-<div class="highlight highlight-r"><pre><span class="pl-vo">all_projects.df</span> <span class="pl-k">&lt;-</span> as.data.frame(<span class="pl-vo">all_projects</span>)
-names(<span class="pl-vo">all_projects.df</span>)</pre></div>
+<div class="highlight highlight-r"><pre><span class="pl-smi">all_projects.df</span> <span class="pl-k">&lt;-</span> as.data.frame(<span class="pl-smi">all_projects</span>)
+names(<span class="pl-smi">all_projects.df</span>)</pre></div>
 
 <pre><code>##  [1] "accession"           "project.title"       "project.description"
 ##  [4] "publication.date"    "num.assays"          "species"            
@@ -97,7 +97,7 @@ names(<span class="pl-vo">all_projects.df</span>)</pre></div>
 
 <p>Let's have a look at the publication dates.  </p>
 
-<div class="highlight highlight-r"><pre>str(<span class="pl-vo">all_projects.df</span><span class="pl-k">$</span><span class="pl-vo">publication.date</span>)</pre></div>
+<div class="highlight highlight-r"><pre>str(<span class="pl-smi">all_projects.df</span><span class="pl-k">$</span><span class="pl-smi">publication.date</span>)</pre></div>
 
 <pre><code>##  POSIXct[1:1331], format: "2015-03-19" "2015-03-19" "2015-03-19" "2015-03-19" ...
 </code></pre>
@@ -106,8 +106,8 @@ names(<span class="pl-vo">all_projects.df</span>)</pre></div>
 interested in years in our study of trends, so let's extract the year in a separate
 variable in the data frame.  </p>
 
-<div class="highlight highlight-r"><pre><span class="pl-vo">all_projects.df</span><span class="pl-k">$</span><span class="pl-vo">publication.year</span> <span class="pl-k">&lt;-</span> as.factor(format(<span class="pl-vo">all_projects.df</span><span class="pl-k">$</span><span class="pl-vo">publication.date</span>, <span class="pl-s1"><span class="pl-pds">"</span>%Y<span class="pl-pds">"</span></span>))
-table(<span class="pl-vo">all_projects.df</span><span class="pl-k">$</span><span class="pl-vo">publication.year</span>)</pre></div>
+<div class="highlight highlight-r"><pre><span class="pl-smi">all_projects.df</span><span class="pl-k">$</span><span class="pl-smi">publication.year</span> <span class="pl-k">&lt;-</span> as.factor(format(<span class="pl-smi">all_projects.df</span><span class="pl-k">$</span><span class="pl-smi">publication.date</span>, <span class="pl-s"><span class="pl-pds">"</span>%Y<span class="pl-pds">"</span></span>))
+table(<span class="pl-smi">all_projects.df</span><span class="pl-k">$</span><span class="pl-smi">publication.year</span>)</pre></div>
 
 <pre><code>## 
 ## 2005 2006 2007 2008 2009 2010 2011 2012 2013 2014 2015 
@@ -116,16 +116,16 @@ table(<span class="pl-vo">all_projects.df</span><span class="pl-k">$</span><span
 
 <p>We have a lot of information in that summary table. But let's put it visually.  </p>
 
-<div class="highlight highlight-r"><pre>ggplot(<span class="pl-v">data</span><span class="pl-k">=</span><span class="pl-vo">all_projects.df</span>, aes(<span class="pl-v">x</span><span class="pl-k">=</span><span class="pl-vo">publication.year</span>)) <span class="pl-k">+</span>
+<div class="highlight highlight-r"><pre>ggplot(<span class="pl-v">data</span><span class="pl-k">=</span><span class="pl-smi">all_projects.df</span>, aes(<span class="pl-v">x</span><span class="pl-k">=</span><span class="pl-smi">publication.year</span>)) <span class="pl-k">+</span>
     geom_bar()</pre></div>
 
-<p><img src="README_files/figure-html/unnamed-chunk-6-1.png" alt=""> </p>
+<p><img src="https://github.com/PRIDE-R/archive-anual-trends/blob/master/README_files/figure-html/unnamed-chunk-6-1.png?raw=true" alt=""> </p>
 
 <p>Maybe we should exclude the present year from our trend analysis since the year
 is not complete and will incorrectly influence the outcomes.  </p>
 
-<div class="highlight highlight-r"><pre><span class="pl-vo">all_projects_up2014.df</span> <span class="pl-k">&lt;-</span> subset(<span class="pl-vo">all_projects.df</span>, <span class="pl-vo">publication.year</span><span class="pl-k">!=</span><span class="pl-s1"><span class="pl-pds">"</span>2015<span class="pl-pds">"</span></span>)
-<span class="pl-vo">num_projects_up2014</span> <span class="pl-k">&lt;-</span> nrow(<span class="pl-vo">all_projects_up2014.df</span>)</pre></div>
+<div class="highlight highlight-r"><pre><span class="pl-smi">all_projects_up2014.df</span> <span class="pl-k">&lt;-</span> subset(<span class="pl-smi">all_projects.df</span>, <span class="pl-smi">publication.year</span><span class="pl-k">!=</span><span class="pl-s"><span class="pl-pds">"</span>2015<span class="pl-pds">"</span></span>)
+<span class="pl-smi">num_projects_up2014</span> <span class="pl-k">&lt;-</span> nrow(<span class="pl-smi">all_projects_up2014.df</span>)</pre></div>
 
 <p>There we are. We have a new dataframe with 1218 projects 
 up to 2014. I think we are ready to start doing some Exploratory Analysis.  </p>
@@ -151,20 +151,20 @@ data frame we saw that each project includes information regarding:  </p>
 <p>Let's first have a look at each of these variables as a whole, and later on we
 can group them by years.  </p>
 
-<div class="highlight highlight-r"><pre><span class="pl-vo">species_table</span> <span class="pl-k">&lt;-</span> sort(table(<span class="pl-vo">all_projects_up2014.df</span><span class="pl-k">$</span><span class="pl-vo">species</span>), <span class="pl-v">decreasing</span><span class="pl-k">=</span><span class="pl-c1">T</span>)
-<span class="pl-vo">species_table_frequent</span> <span class="pl-k">&lt;-</span> <span class="pl-vo">species_table</span>[<span class="pl-vo">species_table</span><span class="pl-k">&gt;</span><span class="pl-c1">10</span>]
-<span class="pl-vo">num_species</span> <span class="pl-k">&lt;-</span> length(<span class="pl-vo">species_table</span>)
-<span class="pl-vo">num_species_frequent</span> <span class="pl-k">&lt;-</span> sum(<span class="pl-vo">species_table</span><span class="pl-k">&gt;</span><span class="pl-c1">10</span>)</pre></div>
+<div class="highlight highlight-r"><pre><span class="pl-smi">species_table</span> <span class="pl-k">&lt;-</span> sort(table(<span class="pl-smi">all_projects_up2014.df</span><span class="pl-k">$</span><span class="pl-smi">species</span>), <span class="pl-v">decreasing</span><span class="pl-k">=</span><span class="pl-c1">T</span>)
+<span class="pl-smi">species_table_frequent</span> <span class="pl-k">&lt;-</span> <span class="pl-smi">species_table</span>[<span class="pl-smi">species_table</span><span class="pl-k">&gt;</span><span class="pl-c1">10</span>]
+<span class="pl-smi">num_species</span> <span class="pl-k">&lt;-</span> length(<span class="pl-smi">species_table</span>)
+<span class="pl-smi">num_species_frequent</span> <span class="pl-k">&lt;-</span> sum(<span class="pl-smi">species_table</span><span class="pl-k">&gt;</span><span class="pl-c1">10</span>)</pre></div>
 
 <p>We see that we have up to 312 different species. But most of them 
 are rare species that appear just once or twice. Just 10
 of them have been submitted more than ten times. Let's plot them.    </p>
 
-<div class="highlight highlight-r"><pre><span class="pl-vo">species_all_time</span> <span class="pl-k">&lt;-</span> <span class="pl-st">data.frame</span>(<span class="pl-v">species</span><span class="pl-k">=</span>names(<span class="pl-vo">species_table_frequent</span>), <span class="pl-v">species_count</span><span class="pl-k">=</span><span class="pl-vo">species_table_frequent</span>)
-ggplot(<span class="pl-v">data</span><span class="pl-k">=</span><span class="pl-vo">species_all_time</span>, aes(<span class="pl-v">x</span><span class="pl-k">=</span><span class="pl-st">factor</span>(<span class="pl-vo">species</span>), <span class="pl-v">y</span><span class="pl-k">=</span><span class="pl-vo">species_count</span>)) <span class="pl-k">+</span>
-    geom_bar(<span class="pl-v">stat</span><span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">'</span>identity<span class="pl-pds">'</span></span>)</pre></div>
+<div class="highlight highlight-r"><pre><span class="pl-smi">species_all_time</span> <span class="pl-k">&lt;-</span> <span class="pl-k">data.frame</span>(<span class="pl-v">species</span><span class="pl-k">=</span>names(<span class="pl-smi">species_table_frequent</span>), <span class="pl-v">species_count</span><span class="pl-k">=</span><span class="pl-smi">species_table_frequent</span>)
+ggplot(<span class="pl-v">data</span><span class="pl-k">=</span><span class="pl-smi">species_all_time</span>, aes(<span class="pl-v">x</span><span class="pl-k">=</span><span class="pl-k">factor</span>(<span class="pl-smi">species</span>), <span class="pl-v">y</span><span class="pl-k">=</span><span class="pl-smi">species_count</span>)) <span class="pl-k">+</span>
+    geom_bar(<span class="pl-v">stat</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">'</span>identity<span class="pl-pds">'</span></span>)</pre></div>
 
-<p><img src="README_files/figure-html/unnamed-chunk-9-1.png" alt=""> </p>
+<p><img src="https://github.com/PRIDE-R/archive-anual-trends/blob/master/README_files/figure-html/unnamed-chunk-9-1.png?raw=true" alt=""> </p>
       </section>
       <footer>
         <p>This project is maintained by <a href="https://github.com/PRIDE-R">PRIDE-R</a></p>
