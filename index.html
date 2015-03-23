@@ -1,33 +1,36 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
+
   <head>
-    <meta charset="utf-8">
+    <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>On Proteomics Research Trends by PRIDE-R</title>
+    <meta name="description" content="On Proteomics Research Trends : A view from the PRIDE Archive">
 
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>On Proteomics Research Trends</title>
   </head>
+
   <body>
-    <div class="wrapper">
-      <header>
-        <h1>On Proteomics Research Trends</h1>
-        <p>A view from the PRIDE Archive</p>
 
-        <p class="view"><a href="https://github.com/PRIDE-R/archive-anual-trends">View the Project on GitHub <small>PRIDE-R/archive-anual-trends</small></a></p>
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/PRIDE-R/archive-anual-trends">View on GitHub</a>
 
+          <h1 id="project_title">On Proteomics Research Trends</h1>
+          <h2 id="project_tagline">A view from the PRIDE Archive</h2>
 
-        <ul>
-          <li><a href="https://github.com/PRIDE-R/archive-anual-trends/zipball/master">Download <strong>ZIP File</strong></a></li>
-          <li><a href="https://github.com/PRIDE-R/archive-anual-trends/tarball/master">Download <strong>TAR Ball</strong></a></li>
-          <li><a href="https://github.com/PRIDE-R/archive-anual-trends">View On <strong>GitHub</strong></a></li>
-        </ul>
-      </header>
-      <section>
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/PRIDE-R/archive-anual-trends/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/PRIDE-R/archive-anual-trends/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
         <h1>
 <a id="pride-archive-anual-trends---exploratory-data-analysis" class="anchor" href="#pride-archive-anual-trends---exploratory-data-analysis" aria-hidden="true"><span class="octicon octicon-link"></span></a>PRIDE Archive Anual Trends - Exploratory Data Analysis</h1>
 
@@ -35,7 +38,7 @@
 20 March 2015  </p>
 
 <h1>
-<a id="requisities" class="anchor" href="#requisities" aria-hidden="true"><span class="octicon octicon-link"></span></a>Requisities</h1>
+<a id="requisites" class="anchor" href="#requisites" aria-hidden="true"><span class="octicon octicon-link"></span></a>Requisites</h1>
 
 <p>These are some of the libraries and configurations we will use in the 
 following analysis.  </p>
@@ -51,7 +54,7 @@ require(<span class="pl-smi">dplyr</span>)</pre></div>
 <a id="a-draft-of-the-pipeline" class="anchor" href="#a-draft-of-the-pipeline" aria-hidden="true"><span class="octicon octicon-link"></span></a>A draft of the pipeline</h1>
 
 <p>The two first parts are carried out in this document. The data visualisation part
-will be generated and published separatelly and referenced from here.  </p>
+will be generated and published separately and referenced from here.  </p>
 
 <p><strong>Data acquisition</strong>  </p>
 
@@ -207,7 +210,7 @@ can compare the rest of the species more easily.  </p>
 
 <p><img src="https://raw.githubusercontent.com/PRIDE-R/archive-anual-trends/master/README_files/figure-html/unnamed-chunk-11-1.png" alt=""> </p>
 
-<p>Amongh other thigns, we can see how <em>Mus musculus (Mouse)</em> has boosted its popularity
+<p>Among other things, we can see how <em>Mus musculus (Mouse)</em> has boosted its popularity
 in 2014. It also seems to be a constant increase of <em>Rat novergicus (Rat)</em> over time
 but it is decaying lately in favor of species such as <em>Escherichia coli</em> and 
 <em>Saccharomyces cerevisiae (Baker's yeast)</em> as we can see in 2013 and 2014.  </p>
@@ -288,7 +291,7 @@ containing this piece of metadata.  </p>
 <a id="modifications" class="anchor" href="#modifications" aria-hidden="true"><span class="octicon octicon-link"></span></a>Modifications</h2>
 
 <p>Our third analysis deals with what modifications are associated with a dataset.
-We will repetat the same procedure.  </p>
+We will repeat the same procedure.  </p>
 
 <div class="highlight highlight-r"><pre><span class="pl-smi">ptm_table</span> <span class="pl-k">&lt;-</span> sort(table(<span class="pl-smi">all_projects_up2014.df</span><span class="pl-k">$</span><span class="pl-smi">ptm.names</span>), <span class="pl-v">decreasing</span><span class="pl-k">=</span><span class="pl-c1">T</span>)
 <span class="pl-smi">ptm_table_frequent</span> <span class="pl-k">&lt;-</span> <span class="pl-smi">ptm_table</span>[<span class="pl-smi">ptm_table</span><span class="pl-k">&gt;</span><span class="pl-c1">10</span>]
@@ -351,7 +354,7 @@ the period 2009-2014.  </p>
 <p>Here we see some trend changes. First of all, the high frequency of <em>monohydroxylated 
 residue</em> seems to be a consequence of 2013 and 2014 publications. A similar thing
 happens with <em>acetylated residue</em>. In the case of <em>iodacetamide - site C</em>, it is
-the most freqently reported modifitcation before 2013, but in 2013 and 2014 is less
+the most frequently reported modification before 2013, but in 2013 and 2014 is less
 reported. In 2014 we see an increase of submissions in <em>iodoacetamide derivated residue</em>
 and <em>carbamidomethyl</em> that from being rarely reported became the third most reported
 modification with 40 datasets made public
@@ -403,7 +406,7 @@ the period 2009-2014.  </p>
 <p><img src="https://raw.githubusercontent.com/PRIDE-R/archive-anual-trends/master/README_files/figure-html/unnamed-chunk-22-1.png" alt=""> </p>
 
 <p>Maybe we can mention as something interesting that <em>LTQ Orbitrap Velos</em> is
-being reported more freqently in 2014 and there is also an increase of usage of
+being reported more frequently in 2014 and there is also an increase of usage of
 <em>Q Exactive</em> in the same year.  </p>
 
 <h1>
@@ -418,7 +421,7 @@ instruments with trends in the previous?</p>
 as a proteomics experimental results repository, we will be able to see actual 
 trends in the datasets in the years to come. Or at least we will be more 
 confident on what has been observed here. The reason is not just that the number
-of submissions is increasing, but also that the platfor is being improved in order
+of submissions is increasing, but also that the platform is being improved in order
 to gather more metadata related with the experiments. Moreover, users get more 
 familiar with the process, being easier for them to provide this information.  </p>
 
@@ -427,17 +430,22 @@ familiar with the process, being easier for them to provide this information.  <
 
 <p>As we introduced, we plan to create a data visualisation using Tableau. The idea
 is to show a report for each of the years including stats for each of the
-variables analysied here. The user will be able to navigate through each year
+variables analysed here. The user will be able to navigate through each year
 and maybe see any existing trends in the field.  </p>
 
 <p><em>TODO</em></p>
       </section>
-      <footer>
-        <p>This project is maintained by <a href="https://github.com/PRIDE-R">PRIDE-R</a></p>
-        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">On Proteomics Research Trends maintained by <a href="https://github.com/PRIDE-R">PRIDE-R</a></p>
+        <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>
       </footer>
     </div>
-    <script src="javascripts/scale.fix.js"></script>
+
     
+
   </body>
 </html>
