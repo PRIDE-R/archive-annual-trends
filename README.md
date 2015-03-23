@@ -1,8 +1,8 @@
-# PRIDE Archive Anual Trends - Exploratory Data Analysis
+# PRIDE Archive Annual Trends - Exploratory Data Analysis
 Jose A. Dianes  
 20 March 2015  
 
-# Requisities  
+# Requisites  
 
 These are some of the libraries and configurations we will use in the 
 following analysis.  
@@ -20,7 +20,7 @@ require(dplyr)
 # A draft of the pipeline  
 
 The two first parts are carried out in this document. The data visualisation part
-will be generated and published separatelly and referenced from here.  
+will be generated and published separately and referenced from here.  
 
 **Data acquisition**  
 
@@ -200,7 +200,7 @@ ggplot(
 
 ![](README_files/figure-html/unnamed-chunk-11-1.png) 
 
-Amongh other thigns, we can see how *Mus musculus (Mouse)* has boosted its popularity
+Among other things, we can see how *Mus musculus (Mouse)* has boosted its popularity
 in 2014. It also seems to be a constant increase of *Rat novergicus (Rat)* over time
 but it is decaying lately in favor of species such as *Escherichia coli* and 
 *Saccharomyces cerevisiae (Baker's yeast)* as we can see in 2013 and 2014.  
@@ -291,7 +291,7 @@ containing this piece of metadata.
 ## Modifications  
 
 Our third analysis deals with what modifications are associated with a dataset.
-We will repetat the same procedure.  
+We will repeat the same procedure.  
 
 
 ```r
@@ -366,7 +366,7 @@ ggplot(
 Here we see some trend changes. First of all, the high frequency of *monohydroxylated 
 residue* seems to be a consequence of 2013 and 2014 publications. A similar thing
 happens with *acetylated residue*. In the case of *iodacetamide - site C*, it is
-the most freqently reported modifitcation before 2013, but in 2013 and 2014 is less
+the most frequently reported modification before 2013, but in 2013 and 2014 is less
 reported. In 2014 we see an increase of submissions in *iodoacetamide derivated residue*
 and *carbamidomethyl* that from being rarely reported became the third most reported
 modification with 40 datasets made public
@@ -426,7 +426,7 @@ ggplot(
 ![](README_files/figure-html/unnamed-chunk-22-1.png) 
 
 Maybe we can mention as something interesting that *LTQ Orbitrap Velos* is
-being reported more freqently in 2014 and there is also an increase of usage of
+being reported more frequently in 2014 and there is also an increase of usage of
 *Q Exactive* in the same year.  
 
 # Conclusions  
@@ -440,7 +440,7 @@ In any case, due to the increasing popularity of PRIDE Archive
 as a proteomics experimental results repository, we will be able to see actual 
 trends in the datasets in the years to come. Or at least we will be more 
 confident on what has been observed here. The reason is not just that the number
-of submissions is increasing, but also that the platfor is being improved in order
+of submissions is increasing, but also that the platform is being improved in order
 to gather more metadata related with the experiments. Moreover, users get more 
 familiar with the process, being easier for them to provide this information.  
 
@@ -448,7 +448,7 @@ familiar with the process, being easier for them to provide this information.
 
 As we introduced, we plan to create a data visualisation using Tableau. The idea
 is to show a report for each of the years including stats for each of the
-variables analysied here. The user will be able to navigate through each year
+variables analysed here. The user will be able to navigate through each year
 and maybe see any existing trends in the field.  
 
 *TODO*
