@@ -34,8 +34,8 @@
 <p>Jose A. Dianes<br>
 20 March 2015  </p>
 
-<h2>
-<a id="requisities" class="anchor" href="#requisities" aria-hidden="true"><span class="octicon octicon-link"></span></a>Requisities</h2>
+<h1>
+<a id="requisities" class="anchor" href="#requisities" aria-hidden="true"><span class="octicon octicon-link"></span></a>Requisities</h1>
 
 <p>These are some of the libraries and configurations we will use in the 
 following analysis.  </p>
@@ -47,35 +47,32 @@ require(<span class="pl-smi">ggplot2</span>)
 theme_set(theme_linedraw())
 require(<span class="pl-smi">dplyr</span>)</pre></div>
 
-<h2>
-<a id="a-draft-of-the-pipeline" class="anchor" href="#a-draft-of-the-pipeline" aria-hidden="true"><span class="octicon octicon-link"></span></a>A draft of the pipeline</h2>
+<h1>
+<a id="a-draft-of-the-pipeline" class="anchor" href="#a-draft-of-the-pipeline" aria-hidden="true"><span class="octicon octicon-link"></span></a>A draft of the pipeline</h1>
 
 <p>The two first parts are carried out in this document. The data visualisation part
 will be generated and published separatelly and referenced from here.  </p>
 
-<h4>
-<a id="data-acquisition" class="anchor" href="#data-acquisition" aria-hidden="true"><span class="octicon octicon-link"></span></a>Data acquisition</h4>
+<p><strong>Data acquisition</strong>  </p>
 
 <p>We will use the <a href="http://pride-r.github.io/prideR">prideR package</a> to retrieve 
 data from all the submitted experiments up to date.  </p>
 
-<h4>
-<a id="exploratory-data-analysis" class="anchor" href="#exploratory-data-analysis" aria-hidden="true"><span class="octicon octicon-link"></span></a>Exploratory Data Analysis</h4>
+<p><strong>Exploratory Data Analysis</strong>  </p>
 
 <p>By using <code>R</code>, first we will prepare and explore data to be mined. Then we will
 compute different summary statistics and generate some plots that will give us
 some insight into the questions we want to answer in our visualisation.  </p>
 
-<h4>
-<a id="data-visualisation" class="anchor" href="#data-visualisation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Data Visualisation</h4>
+<p><strong>Data Visualisation</strong>   </p>
 
 <p>For this data viz we will use <a href="http://www.tableau.com">Tableau</a>. We will generate some worksheets for the 
 key charts, and then we will put them together in an <em>author-driven</em> linear
 narrative that will go over time answering questions about MS2 proteomics 
 research trends.  </p>
 
-<h2>
-<a id="data-acquisition-1" class="anchor" href="#data-acquisition-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>Data acquisition</h2>
+<h1>
+<a id="data-acquisition" class="anchor" href="#data-acquisition" aria-hidden="true"><span class="octicon octicon-link"></span></a>Data acquisition</h1>
 
 <p>Using <a href="http://pride-r.github.io/prideR">prideR</a>, lets retrieve all the public 
 datasets. We will use a large number as page size so we retrieve all of them.    </p>
@@ -119,7 +116,7 @@ table(<span class="pl-smi">all_projects.df</span><span class="pl-k">$</span><spa
 <div class="highlight highlight-r"><pre>ggplot(<span class="pl-v">data</span><span class="pl-k">=</span><span class="pl-smi">all_projects.df</span>, aes(<span class="pl-v">x</span><span class="pl-k">=</span><span class="pl-smi">publication.year</span>)) <span class="pl-k">+</span>
     geom_bar()</pre></div>
 
-<p><img src="https://github.com/PRIDE-R/archive-anual-trends/blob/master/README_files/figure-html/unnamed-chunk-6-1.png?raw=true" alt=""> </p>
+<p><img src="https://github.com/PRIDE-R/archive-anual-trends/blob/master/README_files/figure-html/unnamed-chunk-6-1.png" alt=""> </p>
 
 <p>Maybe we should exclude the present year from our trend analysis since the year
 is not complete and will incorrectly influence the outcomes.  </p>
@@ -130,8 +127,8 @@ is not complete and will incorrectly influence the outcomes.  </p>
 <p>There we are. We have a new dataframe with 1218 projects 
 up to 2014. I think we are ready to start doing some Exploratory Analysis.  </p>
 
-<h2>
-<a id="exploratory-data-analysis-1" class="anchor" href="#exploratory-data-analysis-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>Exploratory Data Analysis</h2>
+<h1>
+<a id="exploratory-data-analysis" class="anchor" href="#exploratory-data-analysis" aria-hidden="true"><span class="octicon octicon-link"></span></a>Exploratory Data Analysis</h1>
 
 <p>So we know how the number of publications has changed over the years. But we are
 also interested in what people research during these years. From the names in our
@@ -149,7 +146,10 @@ data frame we saw that each project includes information regarding:  </p>
 </ul>
 
 <p>Let's first have a look at each of these variables as a whole, and later on we
-can group them by years.  </p>
+can group them by years. We will repeat the analysis fir each variable.    </p>
+
+<h2>
+<a id="species" class="anchor" href="#species" aria-hidden="true"><span class="octicon octicon-link"></span></a>Species</h2>
 
 <div class="highlight highlight-r"><pre><span class="pl-smi">species_table</span> <span class="pl-k">&lt;-</span> sort(table(<span class="pl-smi">all_projects_up2014.df</span><span class="pl-k">$</span><span class="pl-smi">species</span>), <span class="pl-v">decreasing</span><span class="pl-k">=</span><span class="pl-c1">T</span>)
 <span class="pl-smi">species_table_frequent</span> <span class="pl-k">&lt;-</span> <span class="pl-smi">species_table</span>[<span class="pl-smi">species_table</span><span class="pl-k">&gt;</span><span class="pl-c1">10</span>]
@@ -160,11 +160,277 @@ can group them by years.  </p>
 are rare species that appear just once or twice. Just 10
 of them have been submitted more than ten times. Let's plot them.    </p>
 
-<div class="highlight highlight-r"><pre><span class="pl-smi">species_all_time</span> <span class="pl-k">&lt;-</span> <span class="pl-k">data.frame</span>(<span class="pl-v">species</span><span class="pl-k">=</span>names(<span class="pl-smi">species_table_frequent</span>), <span class="pl-v">species_count</span><span class="pl-k">=</span><span class="pl-smi">species_table_frequent</span>)
-ggplot(<span class="pl-v">data</span><span class="pl-k">=</span><span class="pl-smi">species_all_time</span>, aes(<span class="pl-v">x</span><span class="pl-k">=</span><span class="pl-k">factor</span>(<span class="pl-smi">species</span>), <span class="pl-v">y</span><span class="pl-k">=</span><span class="pl-smi">species_count</span>)) <span class="pl-k">+</span>
-    geom_bar(<span class="pl-v">stat</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">'</span>identity<span class="pl-pds">'</span></span>)</pre></div>
+<div class="highlight highlight-r"><pre>ggplot(<span class="pl-v">data</span><span class="pl-k">=</span>subset(<span class="pl-smi">all_projects_up2014.df</span>, <span class="pl-smi">species</span> <span class="pl-k">%in%</span> names(<span class="pl-smi">species_table_frequent</span>))) <span class="pl-k">+</span> 
+       aes(<span class="pl-k">factor</span>(<span class="pl-smi">species</span>, <span class="pl-v">levels</span><span class="pl-k">=</span>names(<span class="pl-smi">species_table_frequent</span>))) <span class="pl-k">+</span>
+    geom_bar() <span class="pl-k">+</span> coord_flip( )<span class="pl-k">+</span>
+    ylab(<span class="pl-s"><span class="pl-pds">"</span>Number of publications<span class="pl-pds">"</span></span>) <span class="pl-k">+</span>
+    xlab(<span class="pl-s"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>) <span class="pl-k">+</span>
+    ggtitle(<span class="pl-s"><span class="pl-pds">"</span>Per Species project publications<span class="pl-pds">"</span></span>)</pre></div>
 
-<p><img src="https://github.com/PRIDE-R/archive-anual-trends/blob/master/README_files/figure-html/unnamed-chunk-9-1.png?raw=true" alt=""> </p>
+<p><img src="https://github.com/PRIDE-R/archive-anual-trends/blob/master/README_files/figure-html/unnamed-chunk-9-1.png" alt=""> </p>
+
+<p>But how this distributes over time? Let's consider just publications after 2009.  </p>
+
+<div class="highlight highlight-r"><pre>ggplot(
+    <span class="pl-v">data</span><span class="pl-k">=</span>subset(<span class="pl-smi">all_projects_up2014.df</span>, 
+                <span class="pl-smi">publication.year</span> <span class="pl-k">%in%</span> <span class="pl-k">factor</span>(c(<span class="pl-s"><span class="pl-pds">"</span>2009<span class="pl-pds">"</span></span>,<span class="pl-s"><span class="pl-pds">"</span>2010<span class="pl-pds">"</span></span>,<span class="pl-s"><span class="pl-pds">"</span>2011<span class="pl-pds">"</span></span>,<span class="pl-s"><span class="pl-pds">"</span>2013<span class="pl-pds">"</span></span>,<span class="pl-s"><span class="pl-pds">"</span>2014<span class="pl-pds">"</span></span>)) <span class="pl-k">&amp;</span> 
+                    <span class="pl-smi">species</span> <span class="pl-k">%in%</span> names(<span class="pl-smi">species_table_frequent</span>)),
+       aes(
+           <span class="pl-k">factor</span>(<span class="pl-smi">species</span>, <span class="pl-v">levels</span><span class="pl-k">=</span>names(<span class="pl-smi">species_table_frequent</span>))
+           )
+    ) <span class="pl-k">+</span>
+    geom_bar() <span class="pl-k">+</span> coord_flip() <span class="pl-k">+</span>
+    facet_grid(. <span class="pl-k">~</span> <span class="pl-smi">publication.year</span>) <span class="pl-k">+</span>
+    ylab(<span class="pl-s"><span class="pl-pds">"</span>Number of publications<span class="pl-pds">"</span></span>) <span class="pl-k">+</span>
+    xlab(<span class="pl-s"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>) <span class="pl-k">+</span>
+    ggtitle(<span class="pl-s"><span class="pl-pds">"</span>Per Species and Year project publications (2009-2014)<span class="pl-pds">"</span></span>)</pre></div>
+
+<p><img src="https://github.com/PRIDE-R/archive-anual-trends/blob/master/README_files/figure-html/unnamed-chunk-10-1.png" alt=""> </p>
+
+<p>It seems clear that human is the most prevalent species, so lets remove it so we
+can compare the rest of the species more easily.  </p>
+
+<div class="highlight highlight-r"><pre>ggplot(
+    <span class="pl-v">data</span><span class="pl-k">=</span>subset(<span class="pl-smi">all_projects_up2014.df</span>, 
+                <span class="pl-smi">publication.year</span> <span class="pl-k">%in%</span> <span class="pl-k">factor</span>(c(<span class="pl-s"><span class="pl-pds">"</span>2009<span class="pl-pds">"</span></span>,<span class="pl-s"><span class="pl-pds">"</span>2010<span class="pl-pds">"</span></span>,<span class="pl-s"><span class="pl-pds">"</span>2011<span class="pl-pds">"</span></span>,<span class="pl-s"><span class="pl-pds">"</span>2013<span class="pl-pds">"</span></span>,<span class="pl-s"><span class="pl-pds">"</span>2014<span class="pl-pds">"</span></span>)) <span class="pl-k">&amp;</span> 
+                    <span class="pl-smi">species</span> <span class="pl-k">%in%</span> names(<span class="pl-smi">species_table_frequent</span>) <span class="pl-k">&amp;</span>
+                    <span class="pl-smi">species</span> <span class="pl-k">!=</span> <span class="pl-s"><span class="pl-pds">"</span>Homo sapiens (Human)<span class="pl-pds">"</span></span>),
+       aes(
+           <span class="pl-k">factor</span>(<span class="pl-smi">species</span>, <span class="pl-v">levels</span><span class="pl-k">=</span>names(<span class="pl-smi">species_table_frequent</span>))
+           )
+    ) <span class="pl-k">+</span>
+    geom_bar() <span class="pl-k">+</span> coord_flip() <span class="pl-k">+</span>
+    facet_grid(. <span class="pl-k">~</span> <span class="pl-smi">publication.year</span>) <span class="pl-k">+</span>
+    ylab(<span class="pl-s"><span class="pl-pds">"</span>Number of publications<span class="pl-pds">"</span></span>) <span class="pl-k">+</span>
+    xlab(<span class="pl-s"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>) <span class="pl-k">+</span>
+    ggtitle(<span class="pl-s"><span class="pl-pds">"</span>Per Species and Year project publications (2009-2014)<span class="pl-pds">"</span></span>)</pre></div>
+
+<p><img src="https://github.com/PRIDE-R/archive-anual-trends/blob/master/README_files/figure-html/unnamed-chunk-11-1.png" alt=""> </p>
+
+<p>Amongh other thigns, we can see how <em>Mus musculus (Mouse)</em> has boosted its popularity
+in 2014. It also seems to be a constant increase of <em>Rat novergicus (Rat)</em> over time
+but it is decaying lately in favor of species such as <em>Escherichia coli</em> and 
+<em>Saccharomyces cerevisiae (Baker's yeast)</em> as we can see in 2013 and 2014.  </p>
+
+<h2>
+<a id="tissues" class="anchor" href="#tissues" aria-hidden="true"><span class="octicon octicon-link"></span></a>Tissues</h2>
+
+<p>Let's repeat a similar analysis for tissues and see what we find.  </p>
+
+<div class="highlight highlight-r"><pre><span class="pl-smi">tissues_table</span> <span class="pl-k">&lt;-</span> sort(table(<span class="pl-smi">all_projects_up2014.df</span><span class="pl-k">$</span><span class="pl-smi">tissues</span>), <span class="pl-v">decreasing</span><span class="pl-k">=</span><span class="pl-c1">T</span>)
+<span class="pl-smi">tissues_table_frequent</span> <span class="pl-k">&lt;-</span> <span class="pl-smi">tissues_table</span>[<span class="pl-smi">tissues_table</span><span class="pl-k">&gt;</span><span class="pl-c1">10</span>]
+<span class="pl-smi">num_tissues</span> <span class="pl-k">&lt;-</span> length(<span class="pl-smi">tissues_table</span>)
+<span class="pl-smi">num_tissues_frequent</span> <span class="pl-k">&lt;-</span> sum(<span class="pl-smi">tissues_table</span><span class="pl-k">&gt;</span><span class="pl-c1">10</span>)</pre></div>
+
+<p>In this case we have up to 143 different tissues. Just 
+10 of them have been submitted more than ten times. 
+Let's plot them.   </p>
+
+<div class="highlight highlight-r"><pre>ggplot(<span class="pl-v">data</span><span class="pl-k">=</span>subset(<span class="pl-smi">all_projects_up2014.df</span>, <span class="pl-smi">tissues</span> <span class="pl-k">%in%</span> names(<span class="pl-smi">tissues_table_frequent</span>))) <span class="pl-k">+</span> 
+       aes(<span class="pl-k">factor</span>(<span class="pl-smi">tissues</span>, <span class="pl-v">levels</span><span class="pl-k">=</span>names(<span class="pl-smi">tissues_table_frequent</span>))) <span class="pl-k">+</span>
+    geom_bar() <span class="pl-k">+</span> coord_flip( )<span class="pl-k">+</span>
+    ylab(<span class="pl-s"><span class="pl-pds">"</span>Number of publications<span class="pl-pds">"</span></span>) <span class="pl-k">+</span>
+    xlab(<span class="pl-s"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>) <span class="pl-k">+</span>
+    ggtitle(<span class="pl-s"><span class="pl-pds">"</span>Per Tissues project publications<span class="pl-pds">"</span></span>)</pre></div>
+
+<p><img src="https://github.com/PRIDE-R/archive-anual-trends/blob/master/README_files/figure-html/unnamed-chunk-13-1.png" alt=""> </p>
+
+<p>A lot of submissions did not specify a tissue. It also happens with species, but
+before wasn't so prominent. In this case we need to filter these out.  </p>
+
+<div class="highlight highlight-r"><pre>ggplot(<span class="pl-v">data</span><span class="pl-k">=</span>
+           subset(
+               <span class="pl-smi">all_projects_up2014.df</span>, 
+               <span class="pl-smi">tissues</span> <span class="pl-k">%in%</span> names(<span class="pl-smi">tissues_table_frequent</span>) <span class="pl-k">&amp;</span>
+                <span class="pl-smi">tissues</span> <span class="pl-k">!=</span> <span class="pl-s"><span class="pl-pds">"</span>Not available<span class="pl-pds">"</span></span>
+               )
+       ) <span class="pl-k">+</span> 
+       aes(<span class="pl-k">factor</span>(<span class="pl-smi">tissues</span>, <span class="pl-v">levels</span><span class="pl-k">=</span>names(<span class="pl-smi">tissues_table_frequent</span>))) <span class="pl-k">+</span>
+    geom_bar() <span class="pl-k">+</span> coord_flip( )<span class="pl-k">+</span>
+    ylab(<span class="pl-s"><span class="pl-pds">"</span>Number of publications<span class="pl-pds">"</span></span>) <span class="pl-k">+</span>
+    xlab(<span class="pl-s"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>) <span class="pl-k">+</span>
+    ggtitle(<span class="pl-s"><span class="pl-pds">"</span>Per Tissues project publications<span class="pl-pds">"</span></span>)</pre></div>
+
+<p><img src="https://github.com/PRIDE-R/archive-anual-trends/blob/master/README_files/figure-html/unnamed-chunk-14-1.png" alt=""> </p>
+
+<p>It seems that most people use <em>cell cultures</em> as a tissue, and that makes sense.
+But out of that we see some popular tissues such as <em>liver</em>, <em>brain</em>, <em>blood</em>, etc.
+We will try to make sense of it later on.  </p>
+
+<p>But now let's have a look at these numbers per year, again considering just 
+the period 2009-2014.  </p>
+
+<div class="highlight highlight-r"><pre>ggplot(
+    <span class="pl-v">data</span><span class="pl-k">=</span>subset(<span class="pl-smi">all_projects_up2014.df</span>, 
+                <span class="pl-smi">publication.year</span> <span class="pl-k">%in%</span> <span class="pl-k">factor</span>(c(<span class="pl-s"><span class="pl-pds">"</span>2009<span class="pl-pds">"</span></span>,<span class="pl-s"><span class="pl-pds">"</span>2010<span class="pl-pds">"</span></span>,<span class="pl-s"><span class="pl-pds">"</span>2011<span class="pl-pds">"</span></span>,<span class="pl-s"><span class="pl-pds">"</span>2013<span class="pl-pds">"</span></span>,<span class="pl-s"><span class="pl-pds">"</span>2014<span class="pl-pds">"</span></span>)) <span class="pl-k">&amp;</span> 
+                    <span class="pl-smi">tissues</span> <span class="pl-k">%in%</span> names(<span class="pl-smi">tissues_table_frequent</span>) <span class="pl-k">&amp;</span>
+                <span class="pl-smi">tissues</span> <span class="pl-k">!=</span> <span class="pl-s"><span class="pl-pds">"</span>Not available<span class="pl-pds">"</span></span>),
+       aes(
+           <span class="pl-k">factor</span>(<span class="pl-smi">tissues</span>, <span class="pl-v">levels</span><span class="pl-k">=</span>names(<span class="pl-smi">tissues_table_frequent</span>))
+           )
+    ) <span class="pl-k">+</span>
+    geom_bar() <span class="pl-k">+</span> coord_flip() <span class="pl-k">+</span>
+    facet_grid(. <span class="pl-k">~</span> <span class="pl-smi">publication.year</span>) <span class="pl-k">+</span>
+    ylab(<span class="pl-s"><span class="pl-pds">"</span>Number of publications<span class="pl-pds">"</span></span>) <span class="pl-k">+</span>
+    xlab(<span class="pl-s"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>) <span class="pl-k">+</span>
+    ggtitle(<span class="pl-s"><span class="pl-pds">"</span>Per Tissues and Year project publications (2009-2014)<span class="pl-pds">"</span></span>)</pre></div>
+
+<p><img src="https://github.com/PRIDE-R/archive-anual-trends/blob/master/README_files/figure-html/unnamed-chunk-15-1.png" alt=""> </p>
+
+<p>Two conclusions here. First, submissions started to include more metadata regarding
+tissues in 2014. And second, numbers are too low actually to arrive to any conclusion
+about trends out of the fact that most people uses cell cultures. Maybe <em>leaf</em> stands
+out a little bit in 2014 considering it doesn't appear un the three previous years.
+But again, we cannot arrive to any actual conclusions when there isn't enough submissions
+containing this piece of metadata.  </p>
+
+<h2>
+<a id="modifications" class="anchor" href="#modifications" aria-hidden="true"><span class="octicon octicon-link"></span></a>Modifications</h2>
+
+<p>Our third analysis deals with what modifications are associated with a dataset.
+We will repetat the same procedure.  </p>
+
+<div class="highlight highlight-r"><pre><span class="pl-smi">ptm_table</span> <span class="pl-k">&lt;-</span> sort(table(<span class="pl-smi">all_projects_up2014.df</span><span class="pl-k">$</span><span class="pl-smi">ptm.names</span>), <span class="pl-v">decreasing</span><span class="pl-k">=</span><span class="pl-c1">T</span>)
+<span class="pl-smi">ptm_table_frequent</span> <span class="pl-k">&lt;-</span> <span class="pl-smi">ptm_table</span>[<span class="pl-smi">ptm_table</span><span class="pl-k">&gt;</span><span class="pl-c1">10</span>]
+<span class="pl-smi">num_ptm</span> <span class="pl-k">&lt;-</span> length(<span class="pl-smi">ptm_table</span>)
+<span class="pl-smi">num_ptm_frequent</span> <span class="pl-k">&lt;-</span> sum(<span class="pl-smi">ptm_table</span><span class="pl-k">&gt;</span><span class="pl-c1">10</span>)</pre></div>
+
+<p>We have up to 76 different modifications. Just 
+17 of them have been submitted more than ten times. 
+Let's plot them.   </p>
+
+<div class="highlight highlight-r"><pre>ggplot(<span class="pl-v">data</span><span class="pl-k">=</span>subset(<span class="pl-smi">all_projects_up2014.df</span>, <span class="pl-smi">ptm.names</span> <span class="pl-k">%in%</span> names(<span class="pl-smi">ptm_table_frequent</span>))) <span class="pl-k">+</span> 
+       aes(<span class="pl-k">factor</span>(<span class="pl-smi">ptm.names</span>, <span class="pl-v">levels</span><span class="pl-k">=</span>names(<span class="pl-smi">ptm_table_frequent</span>))) <span class="pl-k">+</span>
+    geom_bar() <span class="pl-k">+</span> coord_flip( )<span class="pl-k">+</span>
+    ylab(<span class="pl-s"><span class="pl-pds">"</span>Number of publications<span class="pl-pds">"</span></span>) <span class="pl-k">+</span>
+    xlab(<span class="pl-s"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>) <span class="pl-k">+</span>
+    ggtitle(<span class="pl-s"><span class="pl-pds">"</span>Per Modification project publications<span class="pl-pds">"</span></span>)</pre></div>
+
+<p><img src="https://github.com/PRIDE-R/archive-anual-trends/blob/master/README_files/figure-html/unnamed-chunk-17-1.png" alt=""> </p>
+
+<p>Let's filter out unspecified modifications and plot again.  </p>
+
+<div class="highlight highlight-r"><pre>ggplot(<span class="pl-v">data</span><span class="pl-k">=</span>
+           subset(
+               <span class="pl-smi">all_projects_up2014.df</span>, 
+               <span class="pl-smi">ptm.names</span> <span class="pl-k">%in%</span> names(<span class="pl-smi">ptm_table_frequent</span>) <span class="pl-k">&amp;</span>
+                <span class="pl-smi">ptm.names</span> <span class="pl-k">!=</span> <span class="pl-s"><span class="pl-pds">"</span>Not available<span class="pl-pds">"</span></span> <span class="pl-k">&amp;</span>
+                <span class="pl-smi">ptm.names</span> <span class="pl-k">!=</span> <span class="pl-s"><span class="pl-pds">"</span>No PTMs are included in the dataset<span class="pl-pds">"</span></span>
+               ), 
+       aes(<span class="pl-k">factor</span>(<span class="pl-smi">ptm.names</span>, <span class="pl-v">levels</span><span class="pl-k">=</span>names(<span class="pl-smi">ptm_table_frequent</span>)))) <span class="pl-k">+</span>
+    geom_bar() <span class="pl-k">+</span> coord_flip( )<span class="pl-k">+</span>
+    ylab(<span class="pl-s"><span class="pl-pds">"</span>Number of publications<span class="pl-pds">"</span></span>) <span class="pl-k">+</span>
+    xlab(<span class="pl-s"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>) <span class="pl-k">+</span>
+    ggtitle(<span class="pl-s"><span class="pl-pds">"</span>Per Modification project publications<span class="pl-pds">"</span></span>)</pre></div>
+
+<p><img src="https://github.com/PRIDE-R/archive-anual-trends/blob/master/README_files/figure-html/unnamed-chunk-18-1.png" alt=""> </p>
+
+<p>Three modifications stand out from the rest, specially <em>monohydroxylated 
+residue</em>, but also <em>acetylated residue</em>, and <em>iodacetamide - site C</em>.    </p>
+
+<p>But now let's have a look at these numbers per year, again considering just 
+the period 2009-2014.  </p>
+
+<div class="highlight highlight-r"><pre>ggplot(
+    <span class="pl-v">data</span><span class="pl-k">=</span>subset(<span class="pl-smi">all_projects_up2014.df</span>, 
+                <span class="pl-smi">publication.year</span> <span class="pl-k">%in%</span> <span class="pl-k">factor</span>(c(<span class="pl-s"><span class="pl-pds">"</span>2009<span class="pl-pds">"</span></span>,<span class="pl-s"><span class="pl-pds">"</span>2010<span class="pl-pds">"</span></span>,<span class="pl-s"><span class="pl-pds">"</span>2011<span class="pl-pds">"</span></span>,<span class="pl-s"><span class="pl-pds">"</span>2013<span class="pl-pds">"</span></span>,<span class="pl-s"><span class="pl-pds">"</span>2014<span class="pl-pds">"</span></span>)) <span class="pl-k">&amp;</span> 
+                    <span class="pl-smi">ptm.names</span> <span class="pl-k">%in%</span> names(<span class="pl-smi">ptm_table_frequent</span>) <span class="pl-k">&amp;</span>
+               <span class="pl-smi">ptm.names</span> <span class="pl-k">!=</span> <span class="pl-s"><span class="pl-pds">"</span>Not available<span class="pl-pds">"</span></span> <span class="pl-k">&amp;</span>
+                <span class="pl-smi">ptm.names</span> <span class="pl-k">!=</span> <span class="pl-s"><span class="pl-pds">"</span>No PTMs are included in the dataset<span class="pl-pds">"</span></span>
+               ),
+       aes(<span class="pl-k">factor</span>(<span class="pl-smi">ptm.names</span>, <span class="pl-v">levels</span><span class="pl-k">=</span>names(<span class="pl-smi">ptm_table_frequent</span>)))
+    ) <span class="pl-k">+</span>
+    geom_bar() <span class="pl-k">+</span> coord_flip() <span class="pl-k">+</span>
+    facet_grid(. <span class="pl-k">~</span> <span class="pl-smi">publication.year</span>) <span class="pl-k">+</span>
+    ylab(<span class="pl-s"><span class="pl-pds">"</span>Number of publications<span class="pl-pds">"</span></span>) <span class="pl-k">+</span>
+    xlab(<span class="pl-s"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>) <span class="pl-k">+</span>
+    ggtitle(<span class="pl-s"><span class="pl-pds">"</span>Per Modification and Year project publications (2009-2014)<span class="pl-pds">"</span></span>)</pre></div>
+
+<p><img src="https://github.com/PRIDE-R/archive-anual-trends/blob/master/README_files/figure-html/unnamed-chunk-19-1.png" alt=""> </p>
+
+<p>Here we see some trend changes. First of all, the high frequency of <em>monohydroxylated 
+residue</em> seems to be a consequence of 2013 and 2014 publications. A similar thing
+happens with <em>acetylated residue</em>. In the case of <em>iodacetamide - site C</em>, it is
+the most freqently reported modifitcation before 2013, but in 2013 and 2014 is less
+reported. In 2014 we see an increase of submissions in <em>iodoacetamide derivated residue</em>
+and <em>carbamidomethyl</em> that from being rarely reported became the third most reported
+modification with 40 datasets made public
+in 2014.  </p>
+
+<h2>
+<a id="instruments" class="anchor" href="#instruments" aria-hidden="true"><span class="octicon octicon-link"></span></a>Instruments</h2>
+
+<p>Finally we will have a look at what instruments have been reported to be used in
+PRIDE Archive public experiments.  </p>
+
+<div class="highlight highlight-r"><pre><span class="pl-smi">instrument_table</span> <span class="pl-k">&lt;-</span> sort(table(<span class="pl-smi">all_projects_up2014.df</span><span class="pl-k">$</span><span class="pl-smi">instrument.names</span>), <span class="pl-v">decreasing</span><span class="pl-k">=</span><span class="pl-c1">T</span>)
+<span class="pl-smi">instrument_table_frequent</span> <span class="pl-k">&lt;-</span> <span class="pl-smi">instrument_table</span>[<span class="pl-smi">instrument_table</span><span class="pl-k">&gt;</span><span class="pl-c1">10</span>]
+<span class="pl-smi">num_instrument</span> <span class="pl-k">&lt;-</span> length(<span class="pl-smi">instrument_table</span>)
+<span class="pl-smi">num_instrument_frequent</span> <span class="pl-k">&lt;-</span> sum(<span class="pl-smi">instrument_table</span><span class="pl-k">&gt;</span><span class="pl-c1">10</span>)</pre></div>
+
+<p>We have up to 164 different instrument names. Just 
+17 of them have been submitted more than ten times. 
+Let's plot them.   </p>
+
+<div class="highlight highlight-r"><pre>ggplot(<span class="pl-v">data</span><span class="pl-k">=</span>subset(<span class="pl-smi">all_projects_up2014.df</span>, <span class="pl-smi">instrument.names</span> <span class="pl-k">%in%</span> names(<span class="pl-smi">instrument_table_frequent</span>))) <span class="pl-k">+</span> 
+       aes(<span class="pl-k">factor</span>(<span class="pl-smi">instrument.names</span>, <span class="pl-v">levels</span><span class="pl-k">=</span>names(<span class="pl-smi">instrument_table_frequent</span>))) <span class="pl-k">+</span>
+    geom_bar() <span class="pl-k">+</span> coord_flip( )<span class="pl-k">+</span>
+    ylab(<span class="pl-s"><span class="pl-pds">"</span>Number of publications<span class="pl-pds">"</span></span>) <span class="pl-k">+</span>
+    xlab(<span class="pl-s"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>) <span class="pl-k">+</span>
+    ggtitle(<span class="pl-s"><span class="pl-pds">"</span>Per Instrument project publications<span class="pl-pds">"</span></span>)</pre></div>
+
+<p><img src="https://github.com/PRIDE-R/archive-anual-trends/blob/master/README_files/figure-html/unnamed-chunk-21-1.png" alt=""> </p>
+
+<p>Not much here. It seems that different versions of <em>LTQ Orbitrap</em> are the most 
+prevalent instrument reported.  </p>
+
+<p>Lets see if there is any different in a per year chart. Again considering just 
+the period 2009-2014.  </p>
+
+<div class="highlight highlight-r"><pre>ggplot(
+    <span class="pl-v">data</span><span class="pl-k">=</span>subset(<span class="pl-smi">all_projects_up2014.df</span>, 
+                <span class="pl-smi">publication.year</span> <span class="pl-k">%in%</span> <span class="pl-k">factor</span>(c(<span class="pl-s"><span class="pl-pds">"</span>2009<span class="pl-pds">"</span></span>,<span class="pl-s"><span class="pl-pds">"</span>2010<span class="pl-pds">"</span></span>,<span class="pl-s"><span class="pl-pds">"</span>2011<span class="pl-pds">"</span></span>,<span class="pl-s"><span class="pl-pds">"</span>2013<span class="pl-pds">"</span></span>,<span class="pl-s"><span class="pl-pds">"</span>2014<span class="pl-pds">"</span></span>)) <span class="pl-k">&amp;</span> 
+                    <span class="pl-smi">instrument.names</span> <span class="pl-k">%in%</span> names(<span class="pl-smi">instrument_table_frequent</span>)
+               ),
+       aes(<span class="pl-k">factor</span>(<span class="pl-smi">instrument.names</span>, <span class="pl-v">levels</span><span class="pl-k">=</span>names(<span class="pl-smi">instrument_table_frequent</span>)))
+    ) <span class="pl-k">+</span>
+    geom_bar() <span class="pl-k">+</span> coord_flip() <span class="pl-k">+</span>
+    facet_grid(. <span class="pl-k">~</span> <span class="pl-smi">publication.year</span>) <span class="pl-k">+</span>
+    ylab(<span class="pl-s"><span class="pl-pds">"</span>Number of publications<span class="pl-pds">"</span></span>) <span class="pl-k">+</span>
+    xlab(<span class="pl-s"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>) <span class="pl-k">+</span>
+    ggtitle(<span class="pl-s"><span class="pl-pds">"</span>Per Instrument and Year project publications (2009-2014)<span class="pl-pds">"</span></span>)</pre></div>
+
+<p><img src="https://github.com/PRIDE-R/archive-anual-trends/blob/master/README_files/figure-html/unnamed-chunk-22-1.png" alt=""> </p>
+
+<p>Maybe we can mention as something interesting that <em>LTQ Orbitrap Velos</em> is
+being reported more freqently in 2014 and there is also an increase of usage of
+<em>Q Exactive</em> in the same year.  </p>
+
+<h1>
+<a id="conclusions" class="anchor" href="#conclusions" aria-hidden="true"><span class="octicon octicon-link"></span></a>Conclusions</h1>
+
+<p>In order to interpret most of these results, a good knowledge of the field is 
+needed. This is needed to relate different trends in the biological data:
+species, tissues, and modifications. But also it could be possible to relate 
+instruments with trends in the previous?</p>
+
+<p>In any case, due to the increasing popularity of PRIDE Archive 
+as a proteomics experimental results repository, we will be able to see actual 
+trends in the datasets in the years to come. Or at least we will be more 
+confident on what has been observed here. The reason is not just that the number
+of submissions is increasing, but also that the platfor is being improved in order
+to gather more metadata related with the experiments. Moreover, users get more 
+familiar with the process, being easier for them to provide this information.  </p>
+
+<h1>
+<a id="data-visualisation" class="anchor" href="#data-visualisation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Data Visualisation</h1>
+
+<p>As we introduced, we plan to create a data visualisation using Tableau. The idea
+is to show a report for each of the years including stats for each of the
+variables analysied here. The user will be able to navigate through each year
+and maybe see any existing trends in the field.  </p>
+
+<p><em>TODO</em></p>
       </section>
       <footer>
         <p>This project is maintained by <a href="https://github.com/PRIDE-R">PRIDE-R</a></p>
