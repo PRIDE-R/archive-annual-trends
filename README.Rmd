@@ -11,7 +11,7 @@ output:
     toc: yes
 ---
 
-# Requisities  
+# Requisites  
 
 These are some of the libraries and configurations we will use in the 
 following analysis.  
@@ -173,7 +173,7 @@ ggplot(
     ggtitle("Per Species and Year project publications (2009-2014)")
 ```
 
-Amongh other thigns, we can see how *Mus musculus (Mouse)* has boosted its popularity
+Among other things, we can see how *Mus musculus (Mouse)* has boosted its popularity
 in 2014. It also seems to be a constant increase of *Rat novergicus (Rat)* over time
 but it is decaying lately in favor of species such as *Escherichia coli* and 
 *Saccharomyces cerevisiae (Baker's yeast)* as we can see in 2013 and 2014.  
